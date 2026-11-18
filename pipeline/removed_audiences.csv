@@ -1,0 +1,24 @@
+nano_audience,macro_audiences,countries,reason
+SuperWOOPer (tag),Kids; Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,Tag with no database field (segment columns only hold internal codes W0-W15 / S0-S6)
+Affluence (tag),Kids; Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,Tag with no database field
+Verified affluence (tag),Kids; Pets; Senior & health; Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,Tag with no database field
+Working (tag),Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,Tag with no database field
+Verified pet owner (tag),Pets,India; Indonesia; Malaysia; Other ASEAN; Philippines,Tag with no database field
+Uses premium maternal milk,Kids,India; Indonesia; Malaysia; Other ASEAN; Philippines,No list of which brands are premium
+Uses regular maternal milk,Kids,India; Indonesia; Malaysia; Other ASEAN; Philippines,No list of which brands are regular
+Gives premium formula,Kids,India; Indonesia; Malaysia; Other ASEAN; Philippines,No list of which brands are premium
+Gives regular formula,Kids,India; Indonesia; Malaysia; Other ASEAN; Philippines,No list of which brands are regular
+Uses premium diapers,Kids,India; Indonesia; Malaysia; Other ASEAN; Philippines,No list of which brands are premium
+Uses regular diapers,Kids,India; Indonesia; Malaysia; Other ASEAN; Philippines,No list of which brands are regular
+Premium beauty brands,Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,brand_premium is a reused column (also holds water glasses and makeup brand lists); tiers not defined
+Mid-level beauty brands,Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,brand_premium is a reused column; tiers not defined
+Mass beauty brands,Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,brand_premium is a reused column; tiers not defined
+Prefers premium brands,Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,"brand_premium is a reused column, answers are not premium/non-premium"
+Hair removal creams,Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,"No database field (3 mentions in about 238,000 leads)"
+Waxes underarms,Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,"No database field (3 mentions in about 238,000 leads)"
+Shaves underarms,Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,"No database field (3 mentions in about 238,000 leads)"
+Uses her own credit card,Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,No answer separates own from husband's card (0 mentions of husband)
+Uses husband's credit card,Women,India; Indonesia; Malaysia; Other ASEAN; Philippines,No answer separates own from husband's card (0 mentions of husband)
+Yellow teeth,Senior & health,India,"Almost no data (about 400 of 763,000 leads)"
+Child height known,Kids,Philippines,"Almost no data (about 230 of 992,000 leads)"
+Child weight known,Kids,Philippines,"Almost no data (about 230 of 992,000 leads)"
