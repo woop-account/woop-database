@@ -696,7 +696,7 @@ fetch("data.json", { cache: "no-cache" }).then(function (r) { if (!r.ok) throw n
         '<div class="req"><div class="rcell"><span>On file today</span><b class="num">' + (base.lo !== base.hi ? compact(base.lo) + " to " + compact(base.hi) : compact(base.m)) + '</b></div><i aria-hidden="true">+</i>' +
         '<div class="rcell hot"><span>We can add every year</span><b class="num">+' + compact(yy) + "</b></div></div>" +
         "<p>About " + compact(yy / 12) + " every month. This is WOOP's capability for the whole " + (nanoY !== null ? "nano" : "micro") + " audience if a matching brief came in, not a forecast of what will be acquired." +
-        (r.list.length && nanoY === null ? " Nano audiences narrow what is on file today; recruitment is estimated for " + esc(microLabel().toLowerCase()) + " as a whole." : "") + (multi() && nanoY === null ? " Recruitment for combined micro audiences is the sum of each one." : "") + "</p></div>";
+        (r.list.length && nanoY === null ? " Nano audiences narrow what is on file today; recruitment is estimated for " + esc(microLabel().toLowerCase()) + " as a whole." : "") + (nanoY === null ? " Profiled Nano audience recruitment per year can only be validated post pilot." : "") + "</p></div>";
     }
     html += '<div class="actions"><button type="button" class="btn" id="copy">Copy audience brief</button><button type="button" class="linkbtn" id="clear"' + (r.list.length ? "" : " disabled") + ">Clear nano picks</button></div>" +
       '<textarea id="fallback" readonly hidden aria-label="Audience brief"></textarea></section>';
