@@ -95,6 +95,11 @@ svg.i { width: 1em; height: 1em; flex: none; fill: currentColor; }
 .hstat span { font-size: 13px; }
 .asof { grid-column: 1 / -1; font-size: 13px; color: rgba(255,255,255,.92); }
 .asof b { font-weight: 600; }
+.chip[hidden] { display: none; }
+#h-asof { font-size: 16px; }
+#h-asof b { background: var(--yellow); color: var(--on-yellow); font-weight: 700; padding: 3px 10px; border-radius: 6px; margin-left: 2px; white-space: nowrap; }
+#asof { background: var(--yellow); color: var(--on-yellow); font-weight: 600; padding: 3px 10px; border-radius: 6px; }
+#asof:empty { display: none; }
 
 /* ---------- layout ---------- */
 .main { padding-block: 24px 40px; }
@@ -619,7 +624,7 @@ fetch("data.json", { cache: "no-cache" }).then(function (r) { if (!r.ok) throw n
   /* =============== RENDER: static =============== */
   function renderStatic() {
     $("h-moms").textContent = HERO.moms; $("h-pts").textContent = HERO.points;
-    $("samplepill").hidden = !IS_SAMPLE; $("asof").textContent = "Counts on file as of " + asOf() + ". " + DATA_NOTE; $("h-asof").innerHTML = "Database counts as of <b>" + esc(asOf()) + "</b>";
+    $("samplepill").hidden = !IS_SAMPLE; $("asof").textContent = ("Counts on file as of " + asOf() + ". " + DATA_NOTE).trim(); $("h-asof").innerHTML = "Database counts as of <b>" + esc(asOf()) + "</b>";
     var il = $("inslink"); il.hidden = !INSIGHTS_URL; if (INSIGHTS_URL) il.innerHTML = 'Want to know what these moms think and buy? <a href="' + esc(INSIGHTS_URL) + '" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">See WOOP Insights</a>';
     $("certs").innerHTML = CERTS.map(function (c) {
       return c.img ? '<div class="cert"><img src="' + esc(c.img) + '" alt="' + esc(c.name) + '"></div>' : '<div class="cert ph">' + esc(c.name) + "</div>";

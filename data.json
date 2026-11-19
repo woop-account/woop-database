@@ -1,7 +1,7 @@
 {
   "settings": {
     "sample": false,
-    "note": "Counts are from the WOOP database as of 2026-11-18. Not yet filled: Senior & health. Geography and market spend are still sample.",
+    "note": "",
     "asOf": "2026-11-18",
     "geoSample": true,
     "insightsUrl": "",
