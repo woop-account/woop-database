@@ -2628,9 +2628,20 @@
                   r.list.every(function (x) {
                     return x.e.ro;
                   });
+                /* nothing on file for every picked nano: the big number is their yearly recruitment (one pick = exact, several = larger one up to the sum) */
+                var roLo = 0,
+                  roHi = 0;
+                if (allRO) {
+                  r.list.forEach(function (x) {
+                    roLo = Math.max(roLo, x.e.y || 0);
+                    roHi += x.e.y || 0;
+                  });
+                }
                 var onfile = allRO
-                  ? "Not on file yet"
-                  : r.range
+                  ? roLo !== roHi
+                    ? compact(roLo) + " to " + compact(roHi)
+                    : compact(roLo)
+                  : r.range && r.m.lo !== r.m.hi
                     ? compact(r.m.lo) + " to " + compact(r.m.hi)
                     : fmt(r.m.lo);
                 html +=
@@ -2642,13 +2653,10 @@
                   onfile +
                   "<small>" +
                   (allRO
-                    ? "WOOP does not hold " +
+                    ? "moms WOOP can recruit each year" +
                       (r.list.length === 1
-                        ? esc(r.list[0].name).toLowerCase()
-                        : "these audiences") +
-                      " in its database yet, but can recruit " +
-                      (r.list.length === 1 ? "it" : "them") +
-                      " if briefed. Switch on recruitment below"
+                        ? ", matching " + esc(r.list[0].name).toLowerCase()
+                        : ", across " + r.list.length + " nano audiences")
                     : "moms on file as of " +
                       esc(asOf()) +
                       (r.list.length
@@ -2794,6 +2802,11 @@
                       : fmt(mic().m)) +
                     " moms on file)",
                 ];
+                var allRO =
+                  r.list.length > 0 &&
+                  r.list.every(function (x) {
+                    return x.e.ro;
+                  });
                 if (r.list.length) {
                   L.push("Nano audiences:");
                   r.list.forEach(function (x) {
@@ -2802,26 +2815,28 @@
                         x.name +
                         " | " +
                         (x.e.ro
-                          ? "not on file yet, WOOP can recruit"
+                          ? "WOOP can recruit " + fmt(x.e.y || 0) + " each year"
                           : "on file " + fmt(x.e.m)),
                     );
                   });
                 }
-                L.push(
-                  r.range
-                    ? "Moms on file matching any audience: between " +
-                        fmt(r.m.lo) +
-                        " and " +
-                        fmt(r.m.hi)
-                    : "Moms on file: " + fmt(r.m.lo),
-                );
-                L.push(
-                  "Data points on file: " +
-                    span(r.d, compact) +
-                    " (about " +
-                    (r.m.lo > 0 ? trim(r.d.lo / r.m.lo) : "0") +
-                    " per mom)",
-                );
+                if (!allRO) {
+                  L.push(
+                    r.range
+                      ? "Moms on file matching any audience: between " +
+                          fmt(r.m.lo) +
+                          " and " +
+                          fmt(r.m.hi)
+                      : "Moms on file: " + fmt(r.m.lo),
+                  );
+                  L.push(
+                    "Data points on file: " +
+                      span(r.d, compact) +
+                      " (about " +
+                      (r.m.lo > 0 ? trim(r.d.lo / r.m.lo) : "0") +
+                      " per mom)",
+                  );
+                }
                 var b0 =
                     nanoY !== null && r.list[0].e.ro
                       ? { m: 0, lo: 0, hi: 0 }
@@ -2832,13 +2847,16 @@
                   b0.lo !== b0.hi
                     ? fmt(b0.lo + yy) + " to " + fmt(b0.hi + yy)
                     : fmt(b0.m + yy);
+                var roOne = nanoY !== null && r.list[0].e.ro;   // nothing on file for the one nano picked: no "on file today" line
                 L.push(
                   "",
                   "Recruitment: if you brief WOOP for " + who,
-                  "- On file today: " +
-                    (b0.lo !== b0.hi
-                      ? fmt(b0.lo) + " to " + fmt(b0.hi)
-                      : fmt(b0.m)),
+                  roOne
+                    ? null
+                    : "- On file today: " +
+                        (b0.lo !== b0.hi
+                          ? fmt(b0.lo) + " to " + fmt(b0.hi)
+                          : fmt(b0.m)),
                   "- WOOP can add every year: +" +
                     fmt(yy) +
                     " (about " +
@@ -2862,7 +2880,7 @@
                   "Note: moms on file reflect briefs WOOP has received (B2B). A mom can appear in more than one audience.",
                 );
                 if (IS_SAMPLE) L.push("Note: sample figures.");
-                return L.join("\n");
+                return L.filter(function (x) { return x !== null; }).join("\n");
               }
 
               function renderAll(keepFocus) {
