@@ -4495,36 +4495,67 @@
                       } // only rows marked Active are shown
                       var c = canon(MIC, r[ix.c]),
                         m = canon(MIC[c], r[ix.m]),
-                        mi = canon(c && m ? MIC[c][m] : null, r[ix.mi]),
                         g = (r[ix.g] || "").trim() || "Recruit only",
-                        n = (r[ix.n] || "").trim();
+                        n = (r[ix.n] || "").trim(),
+                        raw = (r[ix.mi] || "").trim();
                       var p = num(r[ix.p]),
-                        yr = num(r[ix.y]),
-                        mic = MIC[c] && MIC[c][m] && MIC[c][m][mi],
-                        y = null;
-                      if (!n || !mic) {
-                        bad.push(
-                          "row " +
-                            (k + 2) +
-                            ": " +
-                            (!n
-                              ? "no nano name"
-                              : "no such country, macro and micro"),
+                        yr = num(r[ix.y]);
+                      /* "All dog parents" / "All cat parents" are not micro audiences on the page: the pet micros are
+                         "<Pet> under 1 year" and "<Pet> 1 year and over". Such a row is repeated on both.
+                         Age nanos (months = under 1 year, years = 1 year and over) go only to the matching micro,
+                         sized against the whole dog (or cat) base so the number stays the same. */
+                      var pm = raw.match(/^all\s+(dog|cat)\s+parents$/i),
+                        pet = pm
+                          ? pm[1].charAt(0).toUpperCase() +
+                            pm[1].slice(1).toLowerCase()
+                          : "",
+                        names = pm
+                          ? [pet + " under 1 year", pet + " 1 year and over"]
+                          : [raw],
+                        isAge = pm && /^age$/i.test(g);
+                      if (isAge)
+                        names = [/month/i.test(n) ? names[0] : names[1]];
+                      var mics = names.map(function (nm) {
+                        return canon(c && m ? MIC[c][m] : null, nm);
+                      });
+                      var base = 0;
+                      if (isAge)
+                        [pet + " under 1 year", pet + " 1 year and over"].forEach(
+                          function (nm) {
+                            var k2 = canon(c && m ? MIC[c][m] : null, nm);
+                            if (k2) base += MIC[c][m][k2].y;
+                          },
                         );
-                        return;
-                      }
-                      if (yr !== null && yr > 0) y = Math.round(yr);
-                      else if (p !== null && p > 0 && p <= 100)
-                        y = Math.round((mic.y * p) / 100 / 10) * 10;
-                      if (!(y > 0)) {
-                        bad.push(
-                          "row " +
-                            (k + 2) +
-                            ": needs a recruit % (1 to 100) or a yearly number",
-                        );
-                        return;
-                      }
-                      out.push([c, m, mi, g, n, y]);
+                      names.forEach(function (_, j) {
+                        var mi = mics[j],
+                          mic = MIC[c] && MIC[c][m] && MIC[c][m][mi],
+                          y = null;
+                        if (!n || !mic) {
+                          bad.push(
+                            "row " +
+                              (k + 2) +
+                              ": " +
+                              (!n
+                                ? "no nano name"
+                                : "no such country, macro and micro"),
+                          );
+                          return;
+                        }
+                        if (yr !== null && yr > 0) y = Math.round(yr);
+                        else if (p !== null && p > 0 && p <= 100)
+                          y =
+                            Math.round(((isAge ? base : mic.y) * p) / 100 / 10) *
+                            10;
+                        if (!(y > 0)) {
+                          bad.push(
+                            "row " +
+                              (k + 2) +
+                              ": needs a recruit % (1 to 100) or a yearly number",
+                          );
+                          return;
+                        }
+                        out.push([c, m, mi, g, n, y]);
+                      });
                     });
                     if (bad.length)
                       console.warn(
