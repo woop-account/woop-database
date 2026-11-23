@@ -2518,11 +2518,9 @@
                   html = "",
                   n = Object.keys(nodeNano()).length;
                 $("s4s").textContent =
-                  "Narrow today's file for " +
-                  microLabel().toLowerCase() +
-                  ". Only options that make sense here are listed" +
+                  "Here are some nano-audience estimates we already have (on file + recruitment). Contact sales to add a segment of your choice." +
                   (multi()
-                    ? ". Counts are summed across the age ranges you combined"
+                    ? " Counts are summed across the age ranges you combined."
                     : "");
                 $("nanowrap").hidden = !S.nanoOpen;
                 $("nanolock").innerHTML = S.nanoOpen
@@ -2580,7 +2578,7 @@
                           '><span class="rowbody"><span class="ind"></span><span class="rname">' +
                           esc(it[0]) +
                           '</span><span class="rcount num">' +
-                          (it[1].ro ? "recruit only" : fmt(it[1].m)) +
+                          (it[1].ro ? "" : fmt(it[1].m)) +
                           '</span><span class="bar"><i style="width:' +
                           ((it[1].m / total) * 100).toFixed(1) +
                           '%"></i></span></span></label>'
@@ -2685,7 +2683,7 @@
                           "<small>" +
                           esc(microLabel()) +
                           '</small></b><span class="v num">' +
-                          (x.e.ro ? "recruit only" : fmt(x.e.m)) +
+                          (x.e.ro ? "" : fmt(x.e.m)) +
                           '</span><button type="button" class="rm" data-remove="' +
                           esc(x.key) +
                           '" aria-label="Remove ' +
@@ -4495,7 +4493,7 @@
                       } // only rows marked Active are shown
                       var c = canon(MIC, r[ix.c]),
                         m = canon(MIC[c], r[ix.m]),
-                        g = (r[ix.g] || "").trim() || "Recruit only",
+                        g = (r[ix.g] || "").trim() || "Other",
                         n = (r[ix.n] || "").trim(),
                         raw = (r[ix.mi] || "").trim();
                       var p = num(r[ix.p]),
